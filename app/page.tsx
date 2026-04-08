@@ -517,7 +517,7 @@ export default function Home() {
             {[
               { day: "Maandag",   hours: "Gesloten" },
               { day: "Dinsdag",   hours: "Gesloten" },
-              { day: "Woensdag",  hours: "12:00–14:30  |  17:30–21:30" },
+              { day: "Woensdag",  hours: showWoensdagGesloten ? "Gesloten" : "12:00–14:30  |  17:30–21:30" },
               { day: "Donderdag", hours: "12:00–14:30  |  17:30–21:30" },
               { day: "Vrijdag",   hours: "12:00–14:30  |  17:30–22:00" },
               { day: "Zaterdag",  hours: "12:00–14:30  |  17:30–22:00" },
