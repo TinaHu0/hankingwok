@@ -3,6 +3,23 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  AANKONDIGINGEN — hier kan je berichten aanpassen           ║
+// ║                                                              ║
+// ║  Om een bericht te TONEN:  zet actief: true                 ║
+// ║  Om een bericht te VERBERGEN: zet actief: false             ║
+// ║                                                              ║
+// ║  Na aanpassen: sla op, dan in CMD:                          ║
+// ║    git add .                                                 ║
+// ║    git commit -m "aankondiging bijgewerkt"                  ║
+// ║    git push                                                  ║
+// ╚══════════════════════════════════════════════════════════════╝
+const AANKONDIGING = {
+  actief: false,
+  tekst: "Gesloten van 1 tot 7 april wegens vakantie — wij zijn er weer op 8 april!",
+  kleur: "amber", // keuze: "amber" (geel), "red" (rood), "green" (groen)
+};
+
 // ─── Opening hours ───────────────────────────────────────────
 const HOURS = {
   0: null, // Sunday – see SUNDAY_HOURS
@@ -117,12 +134,39 @@ function isChristmasGallerySeason(): boolean {
   return false;
 }
 
+function formatDate(d: Date): string {
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mm}/${d.getFullYear()}`;
+}
+
+function getEasterMondayDate(year: number): Date {
+  return addDays(getEaster(year), 1);
+}
+
+function getEasterMondayStr(): string {
+  return formatDate(getEasterMondayDate(new Date().getFullYear()));
+}
+
+function getWoensdagStr(): string {
+  return formatDate(addDays(getEasterMondayDate(new Date().getFullYear()), 2));
+}
+
 function isEasterMondayPromo(): boolean {
   const now = new Date();
-  const easterMonday = addDays(getEaster(now.getFullYear()), 1);
+  const easterMonday = getEasterMondayDate(now.getFullYear());
   const threeWeeksBefore = addDays(easterMonday, -21);
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   return today >= threeWeeksBefore && today <= easterMonday;
+}
+
+function isWoensdagGesloten(): boolean {
+  const now = new Date();
+  const easterMonday = getEasterMondayDate(now.getFullYear());
+  const wednesday = addDays(easterMonday, 2);
+  const thursday = addDays(easterMonday, 3);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return today >= wednesday && today <= thursday;
 }
 
 function isValentijnsSeason(): boolean {
@@ -223,6 +267,7 @@ export default function Home() {
   const [nextOpening, setNextOpening] = useState("");
   const [showFeestmenu, setShowFeestmenu] = useState(false);
   const [showEasterBadge, setShowEasterBadge] = useState(false);
+  const [showWoensdagGesloten, setShowWoensdagGesloten] = useState(false);
   const [showValentijn, setShowValentijn] = useState(false);
   const [showChristmasGallery, setShowChristmasGallery] = useState(false);
   const [showMoederdag, setShowMoederdag] = useState(false);
@@ -258,6 +303,7 @@ export default function Home() {
       setIsHoliday(isBelgianHoliday(now));
       setShowFeestmenu(isFeestmenuSeason());
       setShowEasterBadge(isEasterMondayPromo());
+      setShowWoensdagGesloten(isWoensdagGesloten());
       setShowValentijn(isValentijnsSeason());
       setShowChristmasGallery(isChristmasGallerySeason());
       setShowMoederdag(isMoederdagSeason());
@@ -351,11 +397,18 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-stone-900/80 via-stone-900/30 to-stone-900/80" />
 
         <div className="relative z-10 max-w-3xl mx-auto pt-20">
-          {showEasterBadge && (
+          {showEasterBadge && !showWoensdagGesloten && (
             <div className="inline-block mb-6">
               <div className="bg-gradient-to-br from-amber-800 via-yellow-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-amber-700/50 tracking-wide">
-                🐣 Open op Paasmaandag
+                🐣 Open op Paasmaandag {getEasterMondayStr()}
                 <div className="text-amber-300 text-sm font-normal mt-1">12:00–15:00 &amp; 17:30–21:30</div>
+              </div>
+            </div>
+          )}
+          {showWoensdagGesloten && (
+            <div className="inline-block mb-6">
+              <div className="bg-gradient-to-br from-amber-800 via-yellow-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-amber-700/50 tracking-wide">
+                🔒 Woensdag {getWoensdagStr()} gesloten wegens compensatie voor paasmaandag
               </div>
             </div>
           )}
@@ -431,6 +484,17 @@ export default function Home() {
           ? `Wij zijn momenteel gesloten — wij openen ${nextOpening}`
           : "Wij zijn momenteel gesloten"}
       </div>
+
+      {/* ── AANKONDIGING ── */}
+      {AANKONDIGING.actief && (
+        <div className={`text-center py-3 px-6 text-sm font-semibold tracking-wide ${
+          AANKONDIGING.kleur === "red"   ? "bg-red-600 text-white" :
+          AANKONDIGING.kleur === "green" ? "bg-green-600 text-white" :
+          "bg-amber-400 text-stone-900"
+        }`}>
+          📢 {AANKONDIGING.tekst}
+        </div>
+      )}
 
       {/* ── HOLIDAY NOTICE ── */}
       {isHoliday && (
@@ -657,7 +721,7 @@ export default function Home() {
               <h3 className="font-playfair text-xl font-semibold text-center text-green-700 mb-2">
                 🐣 Pasen bij Han King
               </h3>
-              <p className="text-center text-stone-400 text-sm mb-6">Open op Paasmaandag — geniet van ons paasaanbod</p>
+              <p className="text-center text-stone-400 text-sm mb-6">Open op Paasmaandag {getEasterMondayStr()} — geniet van ons paasaanbod</p>
               <PhotoGrid photos={PASSEN_PHOTOS} onPhotoClick={setLightbox} />
             </div>
           )}
