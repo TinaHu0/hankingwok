@@ -473,12 +473,14 @@ export default function Home() {
 
       {/* ── OPEN NOW BANNER ── */}
       <div className={`flex items-center justify-center gap-2 py-3 text-sm font-semibold tracking-wide ${
-        status==="open"||status==="holiday-open" ? "bg-green-700 text-white" : "bg-stone-800 text-white"
+        !showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-700 text-white" : "bg-stone-800 text-white"
       }`}>
         <span className="relative flex h-2.5 w-2.5">
-          <span className={`pulse-dot relative inline-flex rounded-full h-2.5 w-2.5 ${status==="open"||status==="holiday-open" ? "bg-green-300" : "bg-red-400"}`} />
+          <span className={`pulse-dot relative inline-flex rounded-full h-2.5 w-2.5 ${!showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-300" : "bg-red-400"}`} />
         </span>
-        {status==="open"||status==="holiday-open"
+        {showWoensdagGesloten
+          ? "Wij zijn momenteel gesloten — wij openen donderdag om 12:00"
+          : status==="open"||status==="holiday-open"
           ? "Wij zijn momenteel OPEN"
           : nextOpening
           ? `Wij zijn momenteel gesloten — wij openen ${nextOpening}`
