@@ -556,7 +556,7 @@ export default function Home() {
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 flex flex-col gap-3 hover:shadow-md transition-shadow">
               <h3 className="font-playfair text-xl font-bold">Lunchbuffet</h3>
               <div>
-                <span className="text-2xl font-bold text-amber-600">€23</span>
+                <span className="text-2xl font-bold text-amber-600">€23,50</span>
                 <span className="text-stone-500 text-sm ml-2">per persoon</span>
               </div>
               <ul className="text-stone-600 text-sm leading-relaxed space-y-1">
@@ -578,11 +578,11 @@ export default function Home() {
                     <>
                       <div className={`flex justify-between px-3 py-1 rounded-lg text-sm ${!isWeekend?"bg-amber-100 border border-amber-400 font-bold":""}`}>
                         <span>Woensdag & Donderdag (2u30)</span>
-                        <span className="text-amber-600 font-bold">€35,50</span>
+                        <span className="text-amber-600 font-bold">€36,50</span>
                       </div>
                       <div className={`flex justify-between px-3 py-1 rounded-lg text-sm ${isWeekend?"bg-amber-100 border border-amber-400 font-bold":""}`}>
                         <span>Vr, Za, Zo & feestdagen (2u30)</span>
-                        <span className="text-amber-600 font-bold">€37,50</span>
+                        <span className="text-amber-600 font-bold">€38,50</span>
                       </div>
                     </>
                   );
@@ -605,11 +605,11 @@ export default function Home() {
                     <>
                       <div className={`flex justify-between px-3 py-1 rounded-lg text-sm ${!isWeekend?"bg-amber-100 border border-amber-400 font-bold":""}`}>
                         <span>Weekdagen (2u30)</span>
-                        <span className="text-amber-600 font-bold">€50,50</span>
+                        <span className="text-amber-600 font-bold">€51,50</span>
                       </div>
                       <div className={`flex justify-between px-3 py-1 rounded-lg text-sm ${isWeekend?"bg-amber-100 border border-amber-400 font-bold":""}`}>
                         <span>Weekend & feestdagen (2u30)</span>
-                        <span className="text-amber-600 font-bold">€52,50</span>
+                        <span className="text-amber-600 font-bold">€53,50</span>
                       </div>
                     </>
                   );
