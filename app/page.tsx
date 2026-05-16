@@ -174,6 +174,20 @@ function isValentijnsSeason(): boolean {
   return now.getMonth() === 1 && now.getDate() <= 20; // 1–20 februari
 }
 
+// Pinkstermaandag = Pasen + 50 dagen
+function getPinksterMaandagDate(year: number): Date {
+  return addDays(getEaster(year), 50);
+}
+
+// Toon badge 1 week voor Pinkstermaandag t/m Pinkstermaandag zelf
+function isPinksterSeason(): boolean {
+  const now = new Date();
+  const pinkster = getPinksterMaandagDate(now.getFullYear());
+  const oneWeekBefore = addDays(pinkster, -7);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return today >= oneWeekBefore && today <= pinkster;
+}
+
 // Moederdag (2e zondag van mei in België): toon van 25 april t/m 15 mei
 function isMoederdagSeason(): boolean {
   const now = new Date(); const month = now.getMonth()+1; const day = now.getDate();
@@ -271,6 +285,7 @@ export default function Home() {
   const [showValentijn, setShowValentijn] = useState(false);
   const [showChristmasGallery, setShowChristmasGallery] = useState(false);
   const [showMoederdag, setShowMoederdag] = useState(false);
+  const [showPinkster, setShowPinkster] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [heroOffset, setHeroOffset] = useState(0);
@@ -307,6 +322,7 @@ export default function Home() {
       setShowValentijn(isValentijnsSeason());
       setShowChristmasGallery(isChristmasGallerySeason());
       setShowMoederdag(isMoederdagSeason());
+      setShowPinkster(isPinksterSeason());
       if (s==="closed"||s==="holiday-closed") setNextOpening(getNextOpening(now));
       else setNextOpening("");
     };
@@ -409,6 +425,14 @@ export default function Home() {
             <div className="inline-block mb-6">
               <div className="bg-gradient-to-br from-amber-800 via-yellow-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-amber-700/50 tracking-wide">
                 🔒 Woensdag {getWoensdagStr()} gesloten wegens compensatie voor paasmaandag
+              </div>
+            </div>
+          )}
+          {showPinkster && !showEasterBadge && (
+            <div className="inline-block mb-6">
+              <div className="bg-gradient-to-br from-green-800 via-emerald-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-green-700/50 tracking-wide">
+                🌸 Open op Pinkstermaandag {formatDate(getPinksterMaandagDate(new Date().getFullYear()))}
+                <div className="text-green-300 text-sm font-normal mt-1">12:00–15:00 &amp; 17:30–21:30</div>
               </div>
             </div>
           )}
