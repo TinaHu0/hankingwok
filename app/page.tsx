@@ -183,7 +183,7 @@ function getPinksterMaandagDate(year: number): Date {
 function isPinksterSeason(): boolean {
   const now = new Date();
   const pinkster = getPinksterMaandagDate(now.getFullYear());
-  const oneWeekBefore = addDays(pinkster, -7);
+  const oneWeekBefore = addDays(pinkster, -10);
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   return today >= oneWeekBefore && today <= pinkster;
 }
