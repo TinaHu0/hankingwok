@@ -162,11 +162,17 @@ function isEasterMondayPromo(): boolean {
 
 function isWoensdagGesloten(): boolean {
   const now = new Date();
-  const easterMonday = getEasterMondayDate(now.getFullYear());
-  const wednesday = addDays(easterMonday, 2);
-  const thursday = addDays(easterMonday, 3);
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  return today >= wednesday && today <= thursday;
+  // Woensdag+donderdag na Paasmaandag
+  const easterMonday = getEasterMondayDate(now.getFullYear());
+  const easterWed = addDays(easterMonday, 2);
+  const easterThu = addDays(easterMonday, 3);
+  if (today >= easterWed && today <= easterThu) return true;
+  // Woensdag na Pinkstermaandag
+  const pinksterWed = addDays(getPinksterMaandagDate(now.getFullYear()), 2);
+  const pinksterThu = addDays(getPinksterMaandagDate(now.getFullYear()), 3);
+  if (today >= pinksterWed && today < pinksterThu) return true;
+  return false;
 }
 
 function isValentijnsSeason(): boolean {
