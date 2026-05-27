@@ -73,7 +73,9 @@ function getNextOpening(now: Date): string {
     const checkDay = checkDate.getDay();
     const label = offset===0 ? "vandaag" : offset===1 ? "morgen" : DAY_NAMES[checkDay].toLowerCase();
     let sessions: { open: string; close: string }[] = [];
-    if (isBelgianHoliday(checkDate)) {
+    if (isSpecialGeslotenOnDate(checkDate)) {
+      continue;
+    } else if (isBelgianHoliday(checkDate)) {
       sessions = [{open:SUNDAY_HOURS.open,close:SUNDAY_HOURS.close},{open:SUNDAY_HOURS.dinner.open,close:SUNDAY_HOURS.dinner.close}];
     } else if (checkDay===1||checkDay===2) {
       continue;
@@ -160,18 +162,32 @@ function isEasterMondayPromo(): boolean {
   return today >= threeWeeksBefore && today <= easterMonday;
 }
 
+// Check if a specific date is a special closure day (for getNextOpening)
+function isSpecialGeslotenOnDate(date: Date): boolean {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const easterMon = getEasterMondayDate(date.getFullYear());
+  const easterWed = addDays(easterMon, 2);
+  const easterThu = addDays(easterMon, 3);
+  if (d >= easterWed && d <= easterThu) return true;
+  const pinksterWed = addDays(getPinksterMaandagDate(date.getFullYear()), 2);
+  const pinksterThu = addDays(getPinksterMaandagDate(date.getFullYear()), 3);
+  if (d >= pinksterWed && d < pinksterThu) return true;
+  return false;
+}
+
 function isWoensdagGesloten(): boolean {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  // Woensdag+donderdag na Paasmaandag
-  const easterMonday = getEasterMondayDate(now.getFullYear());
-  const easterWed = addDays(easterMonday, 2);
-  const easterThu = addDays(easterMonday, 3);
-  if (today >= easterWed && today <= easterThu) return true;
-  // Woensdag na Pinkstermaandag
-  const pinksterWed = addDays(getPinksterMaandagDate(now.getFullYear()), 2);
-  const pinksterThu = addDays(getPinksterMaandagDate(now.getFullYear()), 3);
-  if (today >= pinksterWed && today < pinksterThu) return true;
+  // Toon al vanaf dinsdag: dinsdag t/m donderdag na Paasmaandag
+  const easterMon = getEasterMondayDate(now.getFullYear());
+  const easterTue = addDays(easterMon, 1);
+  const easterThu = addDays(easterMon, 3);
+  if (today >= easterTue && today <= easterThu) return true;
+  // Toon al vanaf dinsdag: dinsdag t/m woensdag na Pinkstermaandag
+  const pinksterMon = getPinksterMaandagDate(now.getFullYear());
+  const pinksterTue = addDays(pinksterMon, 1);
+  const pinksterThu = addDays(pinksterMon, 3);
+  if (today >= pinksterTue && today < pinksterThu) return true;
   return false;
 }
 
