@@ -20,6 +20,15 @@ const AANKONDIGING = {
   kleur: "amber", // keuze: "amber" (geel), "red" (rood), "green" (groen)
 };
 
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  JAARLIJKS VERLOF — pas deze datums elk jaar aan            ║
+// ║                                                              ║
+// ║  Aankondiging verschijnt automatisch 1 maand voor vertrek   ║
+// ╚══════════════════════════════════════════════════════════════╝
+const VERLOF_START   = new Date(2026, 6, 13); // 13 juli 2026   ← pas aan
+const VERLOF_EINDE   = new Date(2026, 7, 18); // 18 augustus 2026 ← pas aan
+const VERLOF_HEROPEN = new Date(2026, 7, 19); // 19 augustus 2026 ← pas aan
+
 // ─── Opening hours ───────────────────────────────────────────
 const HOURS = {
   0: null, // Sunday – see SUNDAY_HOURS
@@ -64,7 +73,7 @@ function isBelgianHoliday(date: Date): boolean {
 }
 
 function getNextOpening(now: Date): string {
-  if (isJaarlijksVerlof()) return "woensdag 19 augustus om 12:00";
+  if (isJaarlijksVerlof()) return `${DAY_NAMES[VERLOF_HEROPEN.getDay()].toLowerCase()} ${VERLOF_HEROPEN.getDate()} augustus om 12:00`;
   const toMins = (t: string) => { const [h,m] = t.split(":").map(Number); return h*60+m; };
   const currentMins = now.getHours() * 60 + now.getMinutes();
   for (let offset = 0; offset <= 7; offset++) {
@@ -213,21 +222,18 @@ function isPinksterSeason(): boolean {
 }
 
 // ─── Jaarlijks verlof ────────────────────────────────────────
-const VERLOF_START   = new Date(2026, 6, 13); // 13 juli 2026
-const VERLOF_EINDE   = new Date(2026, 7, 18); // 18 augustus 2026
-
 function isJaarlijksVerlof(): boolean {
   const now = new Date();
   const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   return t >= VERLOF_START && t <= VERLOF_EINDE;
 }
 
-// Toon aankondiging 2 weken voor het verlof
+// Toon aankondiging 1 maand voor het verlof
 function isVerlofAankondiging(): boolean {
   const now = new Date();
   const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const twoWeeksBefore = addDays(VERLOF_START, -14); // 29 juni
-  return t >= twoWeeksBefore && t < VERLOF_START;
+  const oneMonthBefore = addDays(VERLOF_START, -30);
+  return t >= oneMonthBefore && t < VERLOF_START;
 }
 
 // Moederdag (2e zondag van mei in België): toon van 25 april t/m 15 mei
