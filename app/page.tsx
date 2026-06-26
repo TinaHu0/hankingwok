@@ -64,6 +64,7 @@ function isBelgianHoliday(date: Date): boolean {
 }
 
 function getNextOpening(now: Date): string {
+  if (isJaarlijksVerlof()) return "woensdag 19 augustus om 12:00";
   const toMins = (t: string) => { const [h,m] = t.split(":").map(Number); return h*60+m; };
   const currentMins = now.getHours() * 60 + now.getMinutes();
   for (let offset = 0; offset <= 7; offset++) {
@@ -95,6 +96,7 @@ function getNextOpening(now: Date): string {
 
 function getStatus(): "open"|"closed"|"holiday-open"|"holiday-closed" {
   const now = new Date();
+  if (isJaarlijksVerlof()) return "closed";
   const timeStr = now.getHours()*60+now.getMinutes();
   const toMins = (t: string) => { const [h,m]=t.split(":").map(Number); return h*60+m; };
   if (isBelgianHoliday(now)) {
@@ -210,6 +212,24 @@ function isPinksterSeason(): boolean {
   return today >= oneWeekBefore && today <= pinkster;
 }
 
+// ─── Jaarlijks verlof ────────────────────────────────────────
+const VERLOF_START   = new Date(2026, 6, 13); // 13 juli 2026
+const VERLOF_EINDE   = new Date(2026, 7, 18); // 18 augustus 2026
+
+function isJaarlijksVerlof(): boolean {
+  const now = new Date();
+  const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return t >= VERLOF_START && t <= VERLOF_EINDE;
+}
+
+// Toon aankondiging 2 weken voor het verlof
+function isVerlofAankondiging(): boolean {
+  const now = new Date();
+  const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const twoWeeksBefore = addDays(VERLOF_START, -14); // 29 juni
+  return t >= twoWeeksBefore && t < VERLOF_START;
+}
+
 // Moederdag (2e zondag van mei in België): toon van 25 april t/m 15 mei
 function isMoederdagSeason(): boolean {
   const now = new Date(); const month = now.getMonth()+1; const day = now.getDate();
@@ -308,6 +328,8 @@ export default function Home() {
   const [showChristmasGallery, setShowChristmasGallery] = useState(false);
   const [showMoederdag, setShowMoederdag] = useState(false);
   const [showPinkster, setShowPinkster] = useState(false);
+  const [showVerlof, setShowVerlof] = useState(false);
+  const [showVerlofAankondiging, setShowVerlofAankondiging] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [heroOffset, setHeroOffset] = useState(0);
@@ -345,6 +367,8 @@ export default function Home() {
       setShowChristmasGallery(isChristmasGallerySeason());
       setShowMoederdag(isMoederdagSeason());
       setShowPinkster(isPinksterSeason());
+      setShowVerlof(isJaarlijksVerlof());
+      setShowVerlofAankondiging(isVerlofAankondiging());
       if (s==="closed"||s==="holiday-closed") setNextOpening(getNextOpening(now));
       else setNextOpening("");
     };
@@ -435,6 +459,22 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-stone-900/80 via-stone-900/30 to-stone-900/80" />
 
         <div className="relative z-10 max-w-3xl mx-auto pt-20">
+          {showVerlof && (
+            <div className="inline-block mb-6">
+              <div className="bg-gradient-to-br from-orange-800 via-amber-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-orange-700/50 tracking-wide">
+                🌴 Jaarlijks verlof — 13 juli t/m 18 augustus
+                <div className="text-amber-300 text-sm font-normal mt-1">Wij verwelkomen u terug op 19 augustus — fijne vakantie!</div>
+              </div>
+            </div>
+          )}
+          {showVerlofAankondiging && (
+            <div className="inline-block mb-6">
+              <div className="bg-gradient-to-br from-orange-800 via-amber-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-orange-700/50 tracking-wide">
+                🌴 Wij sluiten op 13 juli voor jaarlijks verlof
+                <div className="text-amber-300 text-sm font-normal mt-1">Wij zijn er terug op 19 augustus — reserveer op tijd!</div>
+              </div>
+            </div>
+          )}
           {showEasterBadge && !showWoensdagGesloten && (
             <div className="inline-block mb-6">
               <div className="bg-gradient-to-br from-amber-800 via-yellow-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-amber-700/50 tracking-wide">
@@ -519,12 +559,14 @@ export default function Home() {
 
       {/* ── OPEN NOW BANNER ── */}
       <div className={`flex items-center justify-center gap-2 py-3 text-sm font-semibold tracking-wide ${
-        !showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-700 text-white" : "bg-stone-800 text-white"
+        !showVerlof && !showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-700 text-white" : "bg-stone-800 text-white"
       }`}>
         <span className="relative flex h-2.5 w-2.5">
-          <span className={`pulse-dot relative inline-flex rounded-full h-2.5 w-2.5 ${!showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-300" : "bg-red-400"}`} />
+          <span className={`pulse-dot relative inline-flex rounded-full h-2.5 w-2.5 ${!showVerlof && !showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-300" : "bg-red-400"}`} />
         </span>
-        {showWoensdagGesloten
+        {showVerlof
+          ? "🌴 Jaarlijks verlof — gesloten t/m 18 augustus — wij zijn er terug op 19 augustus!"
+          : showWoensdagGesloten
           ? "Wij zijn momenteel gesloten — wij openen donderdag om 12:00"
           : status==="open"||status==="holiday-open"
           ? "Wij zijn momenteel OPEN"
