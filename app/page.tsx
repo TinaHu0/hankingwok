@@ -606,16 +606,31 @@ export default function Home() {
       <section id="hours" className="py-20 px-6 bg-white">
         <div className="max-w-3xl mx-auto reveal">
           <h2 className="font-playfair text-3xl font-bold text-center mb-2">Openingsuren</h2>
-          <p className="text-center text-stone-500 mb-10">Standaard openingsuren — feestdagen kunnen afwijken</p>
+          <p className="text-center text-stone-500 mb-6">Standaard openingsuren — feestdagen kunnen afwijken</p>
+
+          {/* Vacation notice */}
+          {showVerlof && (
+            <div className="mb-8 bg-orange-50 border-l-4 border-orange-500 text-orange-800 px-6 py-4 text-sm text-center rounded">
+              🌴 <strong>Jaarlijks verlof — gesloten van 13 juli t/m 18 augustus.</strong><br />
+              Wij verwelkomen u terug op <strong>19 augustus</strong> — fijne vakantie voor iedereen!
+            </div>
+          )}
+          {showVerlofAankondiging && (
+            <div className="mb-8 bg-orange-50 border-l-4 border-orange-500 text-orange-800 px-6 py-4 text-sm text-center rounded">
+              🌴 <strong>Let op:</strong> Wij sluiten op <strong>13 juli</strong> voor jaarlijks verlof t/m 18 augustus.<br />
+              Reserveer op tijd! Wij zijn er terug op <strong>19 augustus</strong>.
+            </div>
+          )}
+
           <div className="grid gap-3">
             {[
-              { day: "Maandag",   hours: "Gesloten" },
-              { day: "Dinsdag",   hours: "Gesloten" },
-              { day: "Woensdag",  hours: showWoensdagGesloten ? "Gesloten" : "12:00–14:30  |  17:30–21:30" },
-              { day: "Donderdag", hours: "12:00–14:30  |  17:30–21:30" },
-              { day: "Vrijdag",   hours: "12:00–14:30  |  17:30–22:00" },
-              { day: "Zaterdag",  hours: "12:00–14:30  |  17:30–22:00" },
-              { day: "Zondag",    hours: "12:00–15:00  |  17:30–21:30" },
+              { day: "Maandag",   hours: showVerlof ? "Gesloten — vakantie" : "Gesloten" },
+              { day: "Dinsdag",   hours: showVerlof ? "Gesloten — vakantie" : "Gesloten" },
+              { day: "Woensdag",  hours: showVerlof ? "Gesloten — vakantie" : showWoensdagGesloten ? "Gesloten" : "12:00–14:30  |  17:30–21:30" },
+              { day: "Donderdag", hours: showVerlof ? "Gesloten — vakantie" : "12:00–14:30  |  17:30–21:30" },
+              { day: "Vrijdag",   hours: showVerlof ? "Gesloten — vakantie" : "12:00–14:30  |  17:30–22:00" },
+              { day: "Zaterdag",  hours: showVerlof ? "Gesloten — vakantie" : "12:00–14:30  |  17:30–22:00" },
+              { day: "Zondag",    hours: showVerlof ? "Gesloten — vakantie" : "12:00–15:00  |  17:30–21:30" },
             ].map(({ day, hours }) => {
               const isClosed = hours === "Gesloten";
               const isToday = day === DAY_NAMES[new Date().getDay()];
