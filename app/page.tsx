@@ -26,8 +26,8 @@ const AANKONDIGING = {
 // ║  Aankondiging verschijnt automatisch 1 maand voor vertrek   ║
 // ╚══════════════════════════════════════════════════════════════╝
 const VERLOF_START   = new Date(2026, 6, 13); // 13 juli 2026   ← pas aan
-const VERLOF_EINDE   = new Date(2026, 7, 18); // 18 augustus 2026 ← pas aan
-const VERLOF_HEROPEN = new Date(2026, 7, 19); // 19 augustus 2026 ← pas aan
+const VERLOF_EINDE   = new Date(2026, 7, 19); // 19 augustus 2026 ← pas aan
+const VERLOF_HEROPEN = new Date(2026, 7, 20); // 20 augustus 2026 ← pas aan
 
 // ─── Opening hours ───────────────────────────────────────────
 const HOURS = {
@@ -468,8 +468,8 @@ export default function Home() {
           {showVerlof && (
             <div className="inline-block mb-6">
               <div className="bg-gradient-to-br from-orange-800 via-amber-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-orange-700/50 tracking-wide">
-                🌴 Jaarlijks verlof — 13 juli t/m 18 augustus
-                <div className="text-amber-300 text-sm font-normal mt-1">Wij verwelkomen u terug op 19 augustus — fijne vakantie!</div>
+                🌴 Jaarlijks verlof — 13 juli t/m 19 augustus
+                <div className="text-amber-300 text-sm font-normal mt-1">Wij verwelkomen u terug op 20 augustus — fijne vakantie!</div>
               </div>
             </div>
           )}
@@ -477,7 +477,7 @@ export default function Home() {
             <div className="inline-block mb-6">
               <div className="bg-gradient-to-br from-orange-800 via-amber-900 to-stone-900 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-xl border border-orange-700/50 tracking-wide">
                 🌴 Wij sluiten op 13 juli voor jaarlijks verlof
-                <div className="text-amber-300 text-sm font-normal mt-1">Wij zijn er terug op 19 augustus — reserveer op tijd!</div>
+                <div className="text-amber-300 text-sm font-normal mt-1">Wij zijn er terug op 20 augustus — reserveer op tijd!</div>
               </div>
             </div>
           )}
@@ -571,7 +571,7 @@ export default function Home() {
           <span className={`pulse-dot relative inline-flex rounded-full h-2.5 w-2.5 ${!showVerlof && !showWoensdagGesloten && (status==="open"||status==="holiday-open") ? "bg-green-300" : "bg-red-400"}`} />
         </span>
         {showVerlof
-          ? "🌴 Jaarlijks verlof — gesloten t/m 18 augustus — wij zijn er terug op 19 augustus!"
+          ? "🌴 Jaarlijks verlof — gesloten t/m 19 augustus — wij zijn er terug op 20 augustus!"
           : showWoensdagGesloten
           ? "Wij zijn momenteel gesloten — wij openen donderdag om 12:00"
           : status==="open"||status==="holiday-open"
@@ -611,14 +611,14 @@ export default function Home() {
           {/* Vacation notice */}
           {showVerlof && (
             <div className="mb-8 bg-orange-50 border-l-4 border-orange-500 text-orange-800 px-6 py-4 text-sm text-center rounded">
-              🌴 <strong>Jaarlijks verlof — gesloten van 13 juli t/m 18 augustus.</strong><br />
-              Wij verwelkomen u terug op <strong>19 augustus</strong> — fijne vakantie voor iedereen!
+              🌴 <strong>Jaarlijks verlof — gesloten van 13 juli t/m 19 augustus.</strong><br />
+              Wij verwelkomen u terug op <strong>20 augustus</strong> — fijne vakantie voor iedereen!
             </div>
           )}
           {showVerlofAankondiging && (
             <div className="mb-8 bg-orange-50 border-l-4 border-orange-500 text-orange-800 px-6 py-4 text-sm text-center rounded">
-              🌴 <strong>Let op:</strong> Wij sluiten op <strong>13 juli</strong> voor jaarlijks verlof t/m 18 augustus.<br />
-              Reserveer op tijd! Wij zijn er terug op <strong>19 augustus</strong>.
+              🌴 <strong>Let op:</strong> Wij sluiten op <strong>13 juli</strong> voor jaarlijks verlof t/m 19 augustus.<br />
+              Reserveer op tijd! Wij zijn er terug op <strong>20 augustus</strong>.
             </div>
           )}
 
