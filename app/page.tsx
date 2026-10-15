@@ -311,6 +311,27 @@ const PASSEN_PHOTOS = [
   { src: "/Passen/WeChat Image_20230325133104.jpg", alt: "Pasen sfeer 7" },
 ];
 
+// ─── Decorative pine-sprig corner (Kerst meenemen menu) ───────
+function PineCorner({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 140 140" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#c9a24b" strokeWidth="1.4" strokeLinecap="round" opacity="0.85">
+        <path d="M6 6 Q 35 14 52 42" />
+        <path d="M6 6 Q 24 30 36 62" />
+        <path d="M6 6 Q 16 38 20 74" />
+        <path d="M6 6 Q 42 10 78 18" />
+        <path d="M6 6 Q 38 24 66 46" />
+        <path d="M6 6 Q 32 42 48 72" />
+      </g>
+      <circle cx="46" cy="40" r="4" fill="#a3372c" />
+      <circle cx="28" cy="58" r="3" fill="#c9a24b" />
+      <circle cx="62" cy="24" r="3" fill="#c9a24b" />
+      <circle cx="18" cy="32" r="2.5" fill="#a3372c" />
+      <circle cx="40" cy="68" r="2.5" fill="#c9a24b" />
+    </svg>
+  );
+}
+
 // ─── Photo grid component ─────────────────────────────────────
 function PhotoGrid({ photos, onPhotoClick }: { photos: { src: string; alt: string }[]; onPhotoClick?: (src: string) => void }) {
   return (
@@ -804,65 +825,92 @@ export default function Home() {
 
       {/* ── KERST MEENEMEN MENU (15 okt – 2 jan only) ── */}
       {showKerstMeenemen && (
-        <section className="relative py-24 px-6 text-amber-50 border-y border-amber-800 overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/christmas deco/kerst verziering 2.JPG')" }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/90 via-stone-950/70 to-stone-950/90" />
-          <div className="relative z-10 max-w-3xl mx-auto">
+        <section className="relative py-24 px-6 text-amber-50 overflow-hidden bg-[radial-gradient(ellipse_at_center,_#2b1015_0%,_#190a0d_55%,_#0a0405_100%)]">
+          <div className="relative max-w-2xl mx-auto border border-amber-700/40 px-8 py-12 md:px-14 md:py-16">
+
+            {/* Corner flourishes */}
+            <PineCorner className="absolute -top-3 -left-3 w-24 h-24 md:w-32 md:h-32" />
+            <PineCorner className="absolute -top-3 -right-3 w-24 h-24 md:w-32 md:h-32 -scale-x-100" />
+            <PineCorner className="absolute -bottom-3 -left-3 w-24 h-24 md:w-32 md:h-32 -scale-y-100" />
+            <PineCorner className="absolute -bottom-3 -right-3 w-24 h-24 md:w-32 md:h-32 -scale-x-100 -scale-y-100" />
+
+            {/* Hero */}
             <div className="text-center mb-10">
-              <p className="text-amber-400 text-sm uppercase tracking-widest font-semibold mb-3">Om mee te nemen</p>
-              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-3 uppercase tracking-wide">Kerst &amp; Nieuwjaar</h2>
-              <p className="text-stone-200 max-w-xl mx-auto">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <span className="h-px w-10 bg-amber-500/50" />
+                <p className="text-amber-300 text-xs uppercase tracking-[0.35em] font-semibold">Om mee te nemen</p>
+                <span className="h-px w-10 bg-amber-500/50" />
+              </div>
+              <h2 className="font-playfair font-bold text-amber-100 leading-none">
+                <span className="text-5xl md:text-6xl align-baseline">K</span>
+                <span className="text-3xl md:text-4xl align-baseline">erst</span>
+                <span className="text-4xl md:text-5xl align-baseline mx-2">&amp;</span>
+                <span className="text-5xl md:text-6xl align-baseline">N</span>
+                <span className="text-3xl md:text-4xl align-baseline">ieuwjaar</span>
+              </h2>
+              <p className="text-stone-300 text-sm mt-4">
                 Kerstavond en Oudejaarsavond — meenemen menu voor 2 personen
               </p>
-              <p className="text-amber-400 font-bold text-3xl mt-3">€70,00</p>
-            </div>
-
-            <div className="bg-stone-800/50 rounded-2xl p-6 border border-amber-800/40 flex flex-col gap-5">
-              <div>
-                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Soep</h3>
-                <p className="text-stone-300 text-sm">Kreeftsoep of Zuurpikante soep</p>
-              </div>
-              <div>
-                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Voorgerecht</h3>
-                <p className="text-stone-300 text-sm mb-1">Feestelijke hapjesmix (12 stuks)</p>
-                <ul className="text-stone-400 text-sm space-y-0.5 pl-4 list-disc list-inside">
-                  <li>Mini loempia&apos;s — vegetarisch (4 stuks)</li>
-                  <li>Karamari (2 stuks)</li>
-                  <li>Dimsum (2 stuks)</li>
-                  <li>Grote samosa met kip (2 stuks)</li>
-                  <li>Tempura scampi&apos;s (2 stuks)</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Hoofdgerecht</h3>
-                <ul className="text-stone-300 text-sm space-y-0.5">
-                  <li>Gegrilde zalm</li>
-                  <li>Rund met zwarte pepersaus</li>
-                  <li>Kalkoenfilet met pruimensaus</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Dessert</h3>
-                <p className="text-stone-300 text-sm mb-1">Mix voor desserts</p>
-                <ul className="text-stone-400 text-sm space-y-0.5 pl-4 list-disc list-inside">
-                  <li>Chocolademousse (2 stuks)</li>
-                  <li>Javanais (2 stuks)</li>
-                  <li>Macaron (2 stuks)</li>
-                </ul>
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <span className="h-px w-14 bg-amber-500/50" />
+                <span className="text-amber-300 font-bold text-2xl">€70,00</span>
+                <span className="h-px w-14 bg-amber-500/50" />
               </div>
             </div>
 
-            <div className="mt-6 bg-amber-900/20 border border-amber-700/40 rounded-xl p-5 text-sm text-stone-300 space-y-1">
-              <p>📅 <strong className="text-amber-300">Bestel op tijd!</strong></p>
-              <p>Voor 24/12 en 25/12: graag bestellen vóór 22:00 op woensdag 23/12/2026.</p>
-              <p>Voor 31/12/2026 en 01/01/2027: graag bestellen vóór 22:00 op woensdag 30/12/2026.</p>
-              <p>Zo kunnen wij alles vers en tijdig voorbereiden.</p>
+            <div className="border-t border-amber-700/30" />
 
-              <p className="pt-3">🕐 <strong className="text-amber-300">Afhaaltijden:</strong></p>
-              <ul className="list-disc list-inside text-stone-300 space-y-0.5">
+            <div className="py-5">
+              <h3 className="font-playfair text-xl font-bold text-amber-300 mb-1">Soep</h3>
+              <p className="text-stone-200 text-sm">Kreeftsoep of Zuurpikante soep</p>
+            </div>
+            <div className="border-t border-amber-700/30" />
+
+            <div className="py-5">
+              <h3 className="font-playfair text-xl font-bold text-amber-300 mb-1">Voorgerecht</h3>
+              <p className="text-stone-200 text-sm mb-1">Feestelijke hapjesmix (12 stuks)</p>
+              <ul className="text-stone-300 text-sm space-y-0.5 pl-4 list-disc marker:text-amber-400">
+                <li>Mini loempia&apos;s — vegetarisch (4 stuks)</li>
+                <li>Karamari (2 stuks)</li>
+                <li>Dimsum (2 stuks)</li>
+                <li>Grote samosa met kip (2 stuks)</li>
+                <li>Tempura scampi&apos;s (2 stuks)</li>
+              </ul>
+            </div>
+            <div className="border-t border-amber-700/30" />
+
+            <div className="py-5">
+              <h3 className="font-playfair text-xl font-bold text-amber-300 mb-1">Hoofdgerecht</h3>
+              <ul className="text-stone-200 text-sm space-y-0.5">
+                <li>Gegrilde zalm</li>
+                <li>Rund met zwarte pepersaus</li>
+                <li>Kalkoenfilet met pruimensaus</li>
+              </ul>
+            </div>
+            <div className="border-t border-amber-700/30" />
+
+            <div className="py-5">
+              <h3 className="font-playfair text-xl font-bold text-amber-300 mb-1">Dessert</h3>
+              <p className="text-stone-200 text-sm mb-1">Mix voor desserts</p>
+              <ul className="text-stone-300 text-sm space-y-0.5 pl-4 list-disc marker:text-amber-400">
+                <li>Chocolademousse (2 stuks)</li>
+                <li>Javanais (2 stuks)</li>
+                <li>Macaron (2 stuks)</li>
+              </ul>
+            </div>
+            <div className="border-t border-amber-700/30" />
+
+            <div className="py-5">
+              <h3 className="font-playfair text-xl font-bold text-amber-300 mb-1">Bestel op tijd!</h3>
+              <p className="text-stone-200 text-sm">Voor 24/12 en 25/12: graag bestellen vóór 22:00 op woensdag 23/12/2026.</p>
+              <p className="text-stone-200 text-sm">Voor 31/12/2026 en 01/01/2027: graag bestellen vóór 22:00 op woensdag 30/12/2026.</p>
+              <p className="text-stone-400 text-sm">Zo kunnen wij alles vers en tijdig voorbereiden.</p>
+            </div>
+            <div className="border-t border-amber-700/30" />
+
+            <div className="py-5">
+              <h3 className="font-playfair text-xl font-bold text-amber-300 mb-1">Afhaaltijden</h3>
+              <ul className="text-stone-200 text-sm space-y-0.5 pl-4 list-disc marker:text-amber-400">
                 <li>24/12 (Kerstavond): 17:00–21:00</li>
                 <li>25/12 (Kerstdag) — lunch: vóór 12:00</li>
                 <li>25/12 (Kerstdag) — diner: 17:00–21:00</li>
@@ -870,13 +918,17 @@ export default function Home() {
                 <li>01/01 (Nieuwjaarsdag) — lunch: vóór 12:00</li>
                 <li>01/01 (Nieuwjaarsdag) — diner: 17:00–21:00</li>
               </ul>
+            </div>
 
-              <p className="pt-3">
-                📞 <strong className="text-amber-300">Enkel telefonisch bestellen:</strong>{" "}
+            <div className="border-t border-amber-700/30" />
+
+            <div className="text-center pt-6">
+              <p className="text-amber-300 font-bold">
+                Enkel telefonisch bestellen:{" "}
                 <a href="tel:016888013" className="underline">016 888 013</a> of{" "}
                 <a href="tel:0476719374" className="underline">0476 71 93 74</a>
               </p>
-              <p className="text-stone-400 italic">Bestellingen worden alleen telefonisch aangenomen.</p>
+              <p className="text-stone-400 text-sm italic mt-1">Bestellingen worden alleen telefonisch aangenomen.</p>
             </div>
           </div>
         </section>
