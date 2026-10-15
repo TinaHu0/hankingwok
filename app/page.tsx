@@ -804,12 +804,17 @@ export default function Home() {
 
       {/* ── KERST MEENEMEN MENU (15 okt – 2 jan only) ── */}
       {showKerstMeenemen && (
-        <section className="py-20 px-6 bg-stone-900 text-amber-50 border-y border-amber-800">
-          <div className="max-w-3xl mx-auto">
+        <section className="relative py-24 px-6 text-amber-50 border-y border-amber-800 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/christmas deco/kerst verziering 2.JPG')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/90 via-stone-950/70 to-stone-950/90" />
+          <div className="relative z-10 max-w-3xl mx-auto">
             <div className="text-center mb-10">
-              <p className="text-amber-400 text-sm uppercase tracking-widest font-semibold mb-2">Om mee te nemen</p>
-              <h2 className="font-playfair text-3xl font-bold mb-2">🎄 Kerst &amp; Nieuwjaar Meenemen Menu</h2>
-              <p className="text-stone-300 max-w-xl mx-auto">
+              <p className="text-amber-400 text-sm uppercase tracking-widest font-semibold mb-3">Om mee te nemen</p>
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-3 uppercase tracking-wide">Kerst &amp; Nieuwjaar</h2>
+              <p className="text-stone-200 max-w-xl mx-auto">
                 Kerstavond en Oudejaarsavond — meenemen menu voor 2 personen
               </p>
               <p className="text-amber-400 font-bold text-3xl mt-3">€70,00</p>
