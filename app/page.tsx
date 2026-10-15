@@ -700,6 +700,7 @@ export default function Home() {
               <p className="text-stone-500 text-xs">De rij met uw huidige tarief is gemarkeerd</p>
               <ul className="text-stone-600 text-sm leading-relaxed space-y-1 mt-1">
                 <li>✓ Kinderen 3–11 jaar: halve prijs</li>
+                <li>✓ Kinderen onder 3 jaar: gratis</li>
               </ul>
             </div>
 
@@ -714,11 +715,11 @@ export default function Home() {
                     <>
                       <div className={`flex justify-between px-3 py-1 rounded-lg text-sm ${!isWeekend?"bg-amber-100 border border-amber-400 font-bold":""}`}>
                         <span>Weekdagen (2u30)</span>
-                        <span className="text-amber-600 font-bold">€51,50</span>
+                        <span className="text-amber-600 font-bold">€52,00</span>
                       </div>
                       <div className={`flex justify-between px-3 py-1 rounded-lg text-sm ${isWeekend?"bg-amber-100 border border-amber-400 font-bold":""}`}>
                         <span>Weekend & feestdagen (2u30)</span>
-                        <span className="text-amber-600 font-bold">€53,50</span>
+                        <span className="text-amber-600 font-bold">€54,00</span>
                       </div>
                     </>
                   );
@@ -733,6 +734,8 @@ export default function Home() {
                 <li>✓ 1 koffie of thee p.p.</li>
                 <li>✓ Exclusieve sterkdrank & cocktail à volonté</li>
                 <li>✓ Diner & dessert à volonté</li>
+                <li>✓ Kinderen 3–11 jaar: halve prijs</li>
+                <li>✓ Kinderen onder 3 jaar: gratis</li>
                 <li className="text-stone-400 text-xs italic pt-1">⚠ Alles ter plaatse te nuttigen — niet mee te nemen</li>
               </ul>
             </div>
