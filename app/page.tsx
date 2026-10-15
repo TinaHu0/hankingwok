@@ -138,6 +138,16 @@ function isFeestmenuSeason(): boolean {
   return false;
 }
 
+// Kerst meenemen menu: 15 oktober – 2 januari (starts earlier than feestmenu season)
+function isKerstMeenemenSeason(): boolean {
+  const now = new Date(); const month = now.getMonth()+1; const day = now.getDate();
+  if (month===10&&day>=15) return true;
+  if (month===11) return true;
+  if (month===12) return true;
+  if (month===1&&day<=2) return true;
+  return false;
+}
+
 // Christmas gallery: 11 november – 11 januari (wider than feestmenu season)
 function isChristmasGallerySeason(): boolean {
   const now = new Date(); const month = now.getMonth()+1; const day = now.getDate();
@@ -328,6 +338,7 @@ export default function Home() {
   const [isHoliday, setIsHoliday] = useState(false);
   const [nextOpening, setNextOpening] = useState("");
   const [showFeestmenu, setShowFeestmenu] = useState(false);
+  const [showKerstMeenemen, setShowKerstMeenemen] = useState(false);
   const [showEasterBadge, setShowEasterBadge] = useState(false);
   const [showWoensdagGesloten, setShowWoensdagGesloten] = useState(false);
   const [showValentijn, setShowValentijn] = useState(false);
@@ -367,6 +378,7 @@ export default function Home() {
       setStatus(s);
       setIsHoliday(isBelgianHoliday(now));
       setShowFeestmenu(isFeestmenuSeason());
+      setShowKerstMeenemen(isKerstMeenemenSeason());
       setShowEasterBadge(isEasterMondayPromo());
       setShowWoensdagGesloten(isWoensdagGesloten());
       setShowValentijn(isValentijnsSeason());
@@ -786,6 +798,81 @@ export default function Home() {
             <p className="text-center mt-8 text-stone-500 text-sm">
               Prijzen variëren — bel ons voor meer informatie en reservaties.
             </p>
+          </div>
+        </section>
+      )}
+
+      {/* ── KERST MEENEMEN MENU (15 okt – 2 jan only) ── */}
+      {showKerstMeenemen && (
+        <section className="py-20 px-6 bg-stone-900 text-amber-50 border-y border-amber-800">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-amber-400 text-sm uppercase tracking-widest font-semibold mb-2">Om mee te nemen</p>
+              <h2 className="font-playfair text-3xl font-bold mb-2">🎄 Kerst &amp; Nieuwjaar Meenemen Menu</h2>
+              <p className="text-stone-300 max-w-xl mx-auto">
+                Kerstavond en Oudejaarsavond — meenemen menu voor 2 personen
+              </p>
+              <p className="text-amber-400 font-bold text-3xl mt-3">€70,00</p>
+            </div>
+
+            <div className="bg-stone-800/50 rounded-2xl p-6 border border-amber-800/40 flex flex-col gap-5">
+              <div>
+                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Soep</h3>
+                <p className="text-stone-300 text-sm">Kreeftsoep of Zuurpikante soep</p>
+              </div>
+              <div>
+                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Voorgerecht</h3>
+                <p className="text-stone-300 text-sm mb-1">Feestelijke hapjesmix (12 stuks)</p>
+                <ul className="text-stone-400 text-sm space-y-0.5 pl-4 list-disc list-inside">
+                  <li>Mini loempia&apos;s — vegetarisch (4 stuks)</li>
+                  <li>Karamari (2 stuks)</li>
+                  <li>Dimsum (2 stuks)</li>
+                  <li>Grote samosa met kip (2 stuks)</li>
+                  <li>Tempura scampi&apos;s (2 stuks)</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Hoofdgerecht</h3>
+                <ul className="text-stone-300 text-sm space-y-0.5">
+                  <li>Gegrilde zalm</li>
+                  <li>Rund met zwarte pepersaus</li>
+                  <li>Kalkoenfilet met pruimensaus</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-playfair text-lg font-bold text-amber-400 mb-1">Dessert</h3>
+                <p className="text-stone-300 text-sm mb-1">Mix voor desserts</p>
+                <ul className="text-stone-400 text-sm space-y-0.5 pl-4 list-disc list-inside">
+                  <li>Chocolademousse (2 stuks)</li>
+                  <li>Javanais (2 stuks)</li>
+                  <li>Macaron (2 stuks)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-6 bg-amber-900/20 border border-amber-700/40 rounded-xl p-5 text-sm text-stone-300 space-y-1">
+              <p>📅 <strong className="text-amber-300">Bestel op tijd!</strong></p>
+              <p>Voor 24/12 en 25/12: graag bestellen vóór 22:00 op woensdag 23/12/2026.</p>
+              <p>Voor 31/12/2026 en 01/01/2027: graag bestellen vóór 22:00 op woensdag 30/12/2026.</p>
+              <p>Zo kunnen wij alles vers en tijdig voorbereiden.</p>
+
+              <p className="pt-3">🕐 <strong className="text-amber-300">Afhaaltijden:</strong></p>
+              <ul className="list-disc list-inside text-stone-300 space-y-0.5">
+                <li>24/12 (Kerstavond): 17:00–21:00</li>
+                <li>25/12 (Kerstdag) — lunch: vóór 12:00</li>
+                <li>25/12 (Kerstdag) — diner: 17:00–21:00</li>
+                <li>31/12 (Oudejaarsavond): 17:00–19:30</li>
+                <li>01/01 (Nieuwjaarsdag) — lunch: vóór 12:00</li>
+                <li>01/01 (Nieuwjaarsdag) — diner: 17:00–21:00</li>
+              </ul>
+
+              <p className="pt-3">
+                📞 <strong className="text-amber-300">Enkel telefonisch bestellen:</strong>{" "}
+                <a href="tel:016888013" className="underline">016 888 013</a> of{" "}
+                <a href="tel:0476719374" className="underline">0476 71 93 74</a>
+              </p>
+              <p className="text-stone-400 italic">Bestellingen worden alleen telefonisch aangenomen.</p>
+            </div>
           </div>
         </section>
       )}
