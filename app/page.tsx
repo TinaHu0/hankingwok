@@ -457,6 +457,9 @@ export default function Home() {
             <a href="#about"   className="hover:text-amber-400 transition-colors">Ervaring</a>
             <a href="#contact" className="hover:text-amber-400 transition-colors">Contact</a>
             <Link href="/meenemen" className="hover:text-amber-400 transition-colors">Afhaal Menu</Link>
+            {showKerstMeenemen && (
+              <a href="#kerst-meenemen" className="text-amber-300 font-semibold hover:text-amber-400 transition-colors">Kerst Afhaal</a>
+            )}
             <a href="tel:016888013" className="bg-amber-500 text-stone-900 px-4 py-1.5 rounded-full font-bold hover:bg-amber-400 transition-colors">
               Reserveer
             </a>
@@ -481,6 +484,12 @@ export default function Home() {
               className="hover:text-amber-400 transition-colors py-1 border-b border-stone-700">
               Afhaal Menu
             </Link>
+            {showKerstMeenemen && (
+              <a href="#kerst-meenemen" onClick={() => setMenuOpen(false)}
+                className="text-amber-300 font-semibold hover:text-amber-400 transition-colors py-1 border-b border-stone-700">
+                Kerst Afhaal
+              </a>
+            )}
             <a href="tel:016888013" className="bg-amber-500 text-stone-900 px-4 py-2 rounded-full font-bold text-center mt-2">
               Reserveer
             </a>
@@ -825,7 +834,7 @@ export default function Home() {
 
       {/* ── KERST MEENEMEN MENU (15 okt – 2 jan only) ── */}
       {showKerstMeenemen && (
-        <section className="relative py-24 px-6 text-amber-50 overflow-hidden bg-[radial-gradient(ellipse_at_center,_#2b1015_0%,_#190a0d_55%,_#0a0405_100%)]">
+        <section id="kerst-meenemen" className="relative py-24 px-6 text-amber-50 overflow-hidden bg-[radial-gradient(ellipse_at_center,_#2b1015_0%,_#190a0d_55%,_#0a0405_100%)]">
           <div className="relative max-w-2xl mx-auto border border-amber-700/40 px-8 py-12 md:px-14 md:py-16">
 
             {/* Corner flourishes */}
@@ -849,11 +858,11 @@ export default function Home() {
                 <span className="text-3xl md:text-4xl align-baseline">ieuwjaar</span>
               </h2>
               <p className="text-stone-300 text-sm mt-4">
-                Kerstavond en Oudejaarsavond — meenemen menu voor 2 personen
+                24/12 avond &middot; 25/12 hele dag &middot; 31/12 avond &middot; 01/01 — meenemen menu
               </p>
               <div className="flex items-center justify-center gap-4 mt-4">
                 <span className="h-px w-14 bg-amber-500/50" />
-                <span className="text-amber-300 font-bold text-2xl">€70,00</span>
+                <span className="text-amber-300 font-bold text-2xl">€70,00 <span className="text-base font-semibold">/ 2 pers.</span></span>
                 <span className="h-px w-14 bg-amber-500/50" />
               </div>
             </div>
@@ -991,6 +1000,28 @@ export default function Home() {
             </h3>
             <p className="text-center text-stone-400 text-sm mb-6">Warme sfeer, authentieke beleving</p>
             <PhotoGrid photos={RESTAURANT_PHOTOS} onPhotoClick={setLightbox} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── SFEER VIDEO'S ── */}
+      <section className="py-20 px-6 bg-stone-950">
+        <div className="max-w-5xl mx-auto reveal">
+          <h2 className="font-playfair text-3xl font-bold text-center text-white mb-2">Beleef de Sfeer</h2>
+          <p className="text-center text-stone-400 mb-12">Een glimp van Han King in beweging</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <video
+              className="w-full aspect-video object-cover rounded-2xl shadow-lg bg-stone-900"
+              autoPlay muted loop playsInline
+            >
+              <source src="/restaurant sfeer/7808d0f8-cd0e-4199-9a36-6c9f3ea44777.mp4" type="video/mp4" />
+            </video>
+            <video
+              className="w-full aspect-video object-cover rounded-2xl shadow-lg bg-stone-900"
+              autoPlay muted loop playsInline
+            >
+              <source src="/restaurant sfeer/6794cec7-280e-46ae-a219-bdf5fc9d9e3d.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </section>
