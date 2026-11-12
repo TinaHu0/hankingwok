@@ -869,7 +869,7 @@ export default function Home() {
             <div className="text-center mb-10">
               <div className="flex items-center justify-center gap-4 mb-4">
                 <span className="h-px w-10 bg-amber-500/50" />
-                <p className="text-amber-300 text-xs uppercase tracking-[0.35em] font-semibold">Om mee te nemen</p>
+                <p className="text-amber-300 text-base md:text-lg uppercase tracking-[0.35em] font-bold">Om mee te nemen</p>
                 <span className="h-px w-10 bg-amber-500/50" />
               </div>
               <h2 className="font-playfair font-bold text-amber-100 leading-none">
@@ -884,7 +884,7 @@ export default function Home() {
               </p>
               <div className="flex items-center justify-center gap-4 mt-4">
                 <span className="h-px w-14 bg-amber-500/50" />
-                <span className="text-amber-300 font-bold text-2xl">€70,00 <span className="text-base font-semibold">/ 2 pers.</span></span>
+                <span className="text-amber-300 font-bold text-2xl">€70,00 <span className="text-base font-semibold">per menu voor 2 pers.</span></span>
                 <span className="h-px w-14 bg-amber-500/50" />
               </div>
             </div>
