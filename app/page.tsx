@@ -132,7 +132,7 @@ function getStatus(): "open"|"closed"|"holiday-open"|"holiday-closed" {
 // ─── Seasonal helpers ────────────────────────────────────────
 function isFeestmenuSeason(): boolean {
   const now = new Date(); const month = now.getMonth()+1; const day = now.getDate();
-  if (month===11&&day>=15) return true;
+  if (month===11) return true;
   if (month===12) return true;
   if (month===1&&day<=2) return true;
   return false;
