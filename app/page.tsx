@@ -819,7 +819,7 @@ export default function Home() {
               {[
                 { date:"24 december",  day:"Kerstavond",     sessions:["Diner: 17:30–22:00"], prijs:FEESTMENU_PRIJZEN.kerstAvond },
                 { date:"25 december",  day:"Kerstdag",       sessions:["12:00–15:00","17:30–21:30"], prijs:FEESTMENU_PRIJZEN.kerstdag },
-                { date:"31 december",  day:"Oudejaarsavond", sessions:["Diner: 20:00–01:30"], prijs:FEESTMENU_PRIJZEN.oudejaarsAvond, note:"Luxe buffetformule — voorschot €35 p.p. om uw plaats te reserveren" },
+                { date:"31 december",  day:"Oudejaarsavond", sessions:["Diner: 20:00–01:30"], prijs:FEESTMENU_PRIJZEN.oudejaarsAvond, note:"Luxe buffetformule met muziek, dans en een sfeervolle feeststemming — voorschot €35 p.p. om uw plaats te reserveren" },
                 { date:"1 januari",    day:"Nieuwjaarsdag",  sessions:["12:00–15:00","17:30–21:30"], prijs:FEESTMENU_PRIJZEN.nieuwjaarsdag },
               ].map(({ date, day, sessions, prijs, note }) => (
                 <div key={date}>
