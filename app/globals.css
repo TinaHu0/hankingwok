@@ -3,6 +3,7 @@
 @theme inline {
   --font-playfair: var(--font-playfair);
   --font-lato: var(--font-lato);
+  --font-script: var(--font-script);
 }
 
 html {
@@ -67,4 +68,8 @@ body {
 
 .font-lato {
   font-family: var(--font-lato), Arial, Helvetica, sans-serif;
+}
+
+.font-script {
+  font-family: var(--font-script), cursive;
 }

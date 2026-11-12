@@ -258,10 +258,10 @@ function isMoederdagSeason(): boolean {
 // 🎄 FEESTMENU PRIJZEN — update deze elk jaar vóór 15 november
 // ─────────────────────────────────────────────────────────────
 const FEESTMENU_PRIJZEN = {
-  kerstAvond:     "", // 24 dec diner
-  kerstdag:       "", // 25 dec lunch & diner
-  oudejaarsAvond: "", // 31 dec diner
-  nieuwjaarsdag:  "", // 01 jan lunch & diner
+  kerstAvond:     "€59,00 p.p.", // 24 dec diner
+  kerstdag:       "€59,00 p.p.", // 25 dec lunch & diner
+  oudejaarsAvond: "€85,00 p.p.", // 31 dec diner — luxe formule, voorschot €35 p.p.
+  nieuwjaarsdag:  "€59,00 p.p.", // 01 jan lunch & diner
 };
 // ─────────────────────────────────────────────────────────────
 
@@ -792,42 +792,64 @@ export default function Home() {
 
       {/* ── FEESTMENU (15 nov – 2 jan only) ── */}
       {showFeestmenu && (
-        <section className="py-20 px-6 bg-amber-50 border-y border-amber-200">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-10">
-              <p className="text-amber-600 text-sm uppercase tracking-widest font-semibold mb-2">Eindejaarsperiode</p>
-              <h2 className="font-playfair text-3xl font-bold mb-2">🎄 Feestmenu</h2>
-              <p className="text-stone-600 max-w-xl mx-auto">
-                Tijdens de feestdagen bieden wij een speciaal feestmenu aan. Reserveer op tijd — plaatsen zijn beperkt!
-                Bel voor prijzen en info:{" "}
-                <a href="tel:016888013" className="text-amber-700 font-semibold underline">016 888 013</a> of{" "}
-                <a href="tel:0476719374" className="text-amber-700 font-semibold underline">0476 71 93 74</a>
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
+        <section className="relative py-20 px-6 overflow-hidden bg-[#0d0607]">
+          <div
+            className="relative max-w-xl mx-auto border border-amber-700/40"
+            style={{
+              backgroundImage: "url('/christmas deco/Christmas Garland with Gold and Crimson Ornaments.png')",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "top center",
+              backgroundSize: "100% auto",
+              backgroundColor: "#0d060c",
+            }}
+          >
+
+            <div className="px-8 pt-72 pb-14 md:px-14">
+              <div className="text-center mb-8">
+                <p className="text-amber-300 text-xs uppercase tracking-[0.35em] font-semibold mb-2">Eindejaarsperiode</p>
+                <h2 className="font-script text-6xl md:text-7xl text-red-400 leading-none mb-1">Feestmenu</h2>
+                <p className="font-playfair uppercase tracking-[0.2em] text-sm font-bold text-amber-100 mt-2">Bij Han King</p>
+                <p className="text-stone-300 text-sm max-w-sm mx-auto mt-4">
+                  Ons uitgebreid buffet met extra feestelijke gerechten &amp; desserts — alle dranken inbegrepen.
+                </p>
+              </div>
+
+              <div className="border-t border-amber-700/30" />
+
               {[
-                { date:"24 december",  day:"Kerstavond",     sessions:["Diner: 17:30–22:00"], icon:"🕯️", prijs:FEESTMENU_PRIJZEN.kerstAvond },
-                { date:"25 december",  day:"Kerstdag",       sessions:["Lunch: 12:00–15:00","Diner: 17:30–21:30"], icon:"🎄", prijs:FEESTMENU_PRIJZEN.kerstdag },
-                { date:"31 december",  day:"Oudejaarsavond", sessions:["Diner: 17:30–22:00"], icon:"🥂", prijs:FEESTMENU_PRIJZEN.oudejaarsAvond },
-                { date:"1 januari",    day:"Nieuwjaarsdag",  sessions:["Lunch: 12:00–15:00","Diner: 17:30–21:30"], icon:"🎉", prijs:FEESTMENU_PRIJZEN.nieuwjaarsdag },
-              ].map(({ date, day, sessions, icon, prijs }) => (
-                <div key={date} className="bg-white rounded-2xl p-6 shadow-sm border border-amber-200 flex gap-4">
-                  <div className="text-4xl">{icon}</div>
-                  <div className="flex flex-col gap-1">
-                    <h3 className="font-playfair text-xl font-bold">{date}</h3>
-                    <p className="text-amber-700 font-semibold text-sm">{day}</p>
-                    {sessions.map(s => <p key={s} className="text-stone-600 text-sm">✓ {s}</p>)}
+                { date:"24 december",  day:"Kerstavond",     sessions:["Diner: 17:30–22:00"], prijs:FEESTMENU_PRIJZEN.kerstAvond },
+                { date:"25 december",  day:"Kerstdag",       sessions:["12:00–15:00","17:30–21:30"], prijs:FEESTMENU_PRIJZEN.kerstdag },
+                { date:"31 december",  day:"Oudejaarsavond", sessions:["Diner: 20:00–01:30"], prijs:FEESTMENU_PRIJZEN.oudejaarsAvond, note:"Luxe buffetformule — voorschot €35 p.p. om uw plaats te reserveren" },
+                { date:"1 januari",    day:"Nieuwjaarsdag",  sessions:["12:00–15:00","17:30–21:30"], prijs:FEESTMENU_PRIJZEN.nieuwjaarsdag },
+              ].map(({ date, day, sessions, prijs, note }) => (
+                <div key={date}>
+                  <div className="text-center py-5">
+                    <h3 className="font-playfair uppercase tracking-widest font-bold text-red-400 text-sm mb-1">{day}</h3>
+                    <p className="font-playfair text-lg font-bold text-amber-50">{date}</p>
+                    <p className="text-stone-300 text-sm mt-1">{sessions.join(" · ")}</p>
                     {prijs
-                      ? <p className="text-amber-600 font-bold mt-1">{prijs}</p>
-                      : <p className="text-stone-400 text-sm mt-1 italic">Prijs: bel voor info</p>
+                      ? <p className="text-amber-300 font-bold mt-2">{prijs}</p>
+                      : <p className="text-stone-400 text-sm mt-2 italic">Prijs: bel voor info</p>
                     }
+                    {note && <p className="text-stone-400 text-xs italic mt-1 max-w-xs mx-auto">{note}</p>}
                   </div>
+                  <div className="border-t border-amber-700/30" />
                 </div>
               ))}
+
+              <div className="text-center pt-6">
+                <p className="text-stone-300 text-sm max-w-md mx-auto">
+                  <strong className="text-amber-300">Inbegrepen:</strong>{" "}
+                  aperitief, huiswijn, bier &amp; frisdrank, koffie/thee en exclusieve cocktails &amp; sterkedrank à volonté.
+                  Kinderen 3–11j: halve prijs — onder 3j: gratis.
+                </p>
+                <p className="mt-4 font-semibold text-amber-300">
+                  Reserveren: <a href="tel:016888013" className="underline">016 888 013</a> of{" "}
+                  <a href="tel:0476719374" className="underline">0476 71 93 74</a>
+                </p>
+                <p className="text-stone-400 text-xs italic mt-1">Plaatsen zijn beperkt — reserveer op tijd!</p>
+              </div>
             </div>
-            <p className="text-center mt-8 text-stone-500 text-sm">
-              Prijzen variëren — bel ons voor meer informatie en reservaties.
-            </p>
           </div>
         </section>
       )}
